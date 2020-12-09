@@ -1,11 +1,15 @@
-import tensorflow as tf
-import tensorflow_hub as hub
+# Utility Functions
+import streamlit as st
 import pandas as pd
 import numpy as np
-from tensorflow.contrib import predictor
-from pathlib import Path
-import os
+from newspaper import Article
 from bert import run_classifier, tokenization
+import tensorflow as tf
+import tensorflow_hub as hub
+
+def process_web_article(url):
+    article = Article(url)
+    return article
 
 label_list = [0, 1]
 MAX_SEQ_LENGTH = 128
@@ -26,7 +30,7 @@ def create_tokenizer_from_hub_module():
       vocab_file=vocab_file, do_lower_case=do_lower_case)
 
 def predict(sentences, predict_fn):
-
+    tokenizer = create_tokenizer_from_hub_module()
     labels = [0, 1]
     input_examples = [
         run_classifier.InputExample(
@@ -57,23 +61,8 @@ def predict(sentences, predict_fn):
     }
 
     predictions = predict_fn(pred_dict)
+    print(predictions)
     return [
         (sentence, prediction, label)
-        for sentence, prediction, label in zip(pred_sentences, predictions['probabilities'], predictions['labels'])
+        for sentence, prediction, label in zip(sentences, predictions['probabilities'], [predictions['labels']])
     ]
-
-tokenizer = create_tokenizer_from_hub_module()
-
-pred_sentences = [
-  'People won’t admit they’re going to vote for him. I don’t want the person that’s behind your public Facebook account, I want the person that’s behind your troll account. When I look at Pennsylvania, for example, I’ve got Biden up by one point, but I don’t think Biden is going to win Pennsylvania. I think Trump is probably going to win it. I think Trump will out-perform our polls by a point or two.',
-  'this is fake news'
-]
-
-export_dir = './model/'
-predict_fn = predictor.from_saved_model(export_dir)
-print('\n\nModel Successfully loaded\n\n')
-# input_examples = [run_classifier.InputExample(guid="", text_a = x, text_b = None, label = 0) for x in pred_sentences] # here, "" is just a dummy label
-# input_features = run_classifier.convert_examples_to_features(input_examples, label_list, MAX_SEQ_LENGTH, tokenizer)
-# predict_input_fn = run_classifier.input_fn_builder(features=input_features, seq_length=MAX_SEQ_LENGTH, is_training=False, drop_remainder=False)
-predictions = predict(pred_sentences, predict_fn)
-print(predictions)

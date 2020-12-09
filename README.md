@@ -45,4 +45,19 @@ Training only took 1.429 minutes. This is the beauty of BERT's parallel structur
     precision = 0.983368
     recall = 0.99369746
 
+## Web App
+![image](media/web_app_ss.png)
+
+**To run locally:**
+
+Install requirements:
+`pip install requirements.txt`
+
+Run Streamlit app:
+`streamlit run app.py`
+
 ## Production
+
+TODO:
+
+Deploy to Heroku server as a web app.

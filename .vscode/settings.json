@@ -1,4 +1,4 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.pythonPath": "/Users/vinhnguyen/opt/anaconda3/envs/fake_news/bin/python"
+    "python.pythonPath": "/Users/vinhnguyen/opt/miniconda3/envs/fake_news/bin/python"
 }

@@ -1,5 +1,6 @@
 logs/
 google-cloud-sdk/
 data/
-model/
 .vscode/
+fake_news.json
+model/

@@ -2,7 +2,9 @@ pandas==1.1.2
 streamlit==0.7.0
 numpy==1.18.1
 newspaper3k==0.2.8
-newspaper==0.1.0.7
 ts==0.5.1
 bert-tensorflow==1.0.1
 tensorflow==1.15
+tensorflow_hub
+tb-nightly
+google-cloud-storage
